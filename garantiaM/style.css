@@ -1,0 +1,14 @@
+body {
+        background: url(/garantiaM/img/fundo.jpg) no-repeat center top fixed #00011a;
+}
+.fonte{
+	color: #000;
+	font-style: italic; 
+}
+.marca{
+	float: right; 
+	margin-bottom: 0;
+	position: fixed;
+	right: 0px; 
+	bottom: 0;
+}
