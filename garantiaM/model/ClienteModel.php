@@ -29,15 +29,15 @@ class ClienteModel{
 
 	public function inserir($nome, $registro, $tipoCliente){
 		if($tipoCliente == "Frotista"){
-			$insercao = $this->bd->prepare("INSERT INTO cliente(nomeCliente) values (:nomeCliente); INSERT INTO final(idClienteFrotista, cnpjClienteFrotista) values((SELECT MAX(idCliente) from cliente where nomeCliente = :nomeCliente), :registro)");
+			$insercao = $this->bd->prepare("INSERT INTO cliente(nomeCliente) values (:nomeCliente); INSERT INTO frotista(idClienteFrotista, cnpjClienteFrotista) values((SELECT MAX(idCliente) from cliente where nomeCliente = :nomeCliente), :registro)");
 		}else if($tipoCliente == "Final"){
 			$insercao = $this->bd->prepare("INSERT INTO cliente(nomeCliente) values (:nomeCliente); INSERT INTO final(idClienteFinal, cpfClienteFinal) values((SELECT MAX(idCliente) from cliente where nomeCliente = :nomeCliente), :registro)");
+		}
 
 			$insercao->bindParam(":nomeCliente", $nome);
 			$insercao->bindParam(":registro", $registro);
 
 			$insercao->execute();
-		}
 
 	}
 }

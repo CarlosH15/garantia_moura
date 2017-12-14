@@ -39,8 +39,15 @@ ob_start();
 </div>
 <div class="row">
 	<div class="offset-sm-1 col-sm-8 offset-sm-1">
-		<form action="/garantiaM/venda/index.php">
-			<input class="btn btn-default" type="submit" value="Cadastro de venda"><br><br>
+		<form action="/garantiaM/vendapf/index.php">
+			<input class="btn btn-default" type="submit" value="Cadastro de venda para PF"><br><br>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<div class="offset-sm-1 col-sm-8 offset-sm-1">
+		<form action="/garantiaM/vendapj/index.php">
+			<input class="btn btn-default" type="submit" value="Cadastro de venda para PJ"><br><br>
 		</form>
 	</div>
 </div>

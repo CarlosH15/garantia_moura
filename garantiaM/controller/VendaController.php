@@ -6,61 +6,67 @@ require_once $_SERVER["DOCUMENT_ROOT"] . "/garantiaM/model/VendaModel.php";
 
 $vendaModel = new VendaModel();
 
-	$diretorio = "../upload/";
-	$tipoCliente = $_GET["tipoCliente"];
-	$idRevendedor = $_SESSION["idRevendedor"];
-	$cpf = $_POST["CPF"];
-	$nomeCliente = $_POST["nomeCliente"];
-	$modeloBateria = $_POST["modelo"];
-	$codigoBateria = $_POST["codigoBateria"];
-	$placa = $_POST["placa"];
-	$numeroNF = $_POST["numeroNF"];
-	$dataVenda = $_POST["dataVenda"];
-	$imagem1 = $_FILES['imagem1'];
-	$imagem2 = $_FILES['imagem2'];
-	$imagem3 = $_FILES['imagem3'];
+$tipoCliente = $_GET["tipoCliente"];
 
-	$nomeCliente = strtoupper($nomeCliente);
-	$codigoBateria = strtoupper($codigoBateria);
-	$placa = strtoupper($placa);		
+if($tipoCliente == "pf"){
+	$registro = $_POST["CPF"];
+	$registro = str_replace(".", "", $registro);
+	$registro = str_replace("-", "", $registro);
+}else if($tipoCliente == "pj"){
+	$registro = $_POST["CNPJ"];
+	$registro = str_replace(".", "", $registro);
+	$registro = str_replace("-", "", $registro);
+	$registro = str_replace("/", "", $registro);
+}
 
-	$cpf = str_replace(".", "", $cpf);
-	$cpf = str_replace("-", "", $cpf);
+$diretorio = "../upload/";
+$idRevendedor = $_SESSION["idRevendedor"];
+$modeloBateria = $_POST["modelo"];
+$codigoBateria = $_POST["codigoBateria"];
+$placa = $_POST["placa"];
+$numeroNF = $_POST["numeroNF"];
+$dataVenda = $_POST["dataVenda"];
+$imagem1 = $_FILES['imagem1'];
+$imagem2 = $_FILES['imagem2'];
+$imagem3 = $_FILES['imagem3'];
 
-	$codigoBateria = str_replace("/", "", $codigoBateria);
-	$codigoBateria = str_replace("-", "", $codigoBateria);
+$codigoBateria = strtoupper($codigoBateria);
+$placa = strtoupper($placa);
 
-	$dataVenda = date("Y-m-d",strtotime(str_replace('/','-',$dataVenda)));
+$placa = str_replace("-", "", $placa);
 
-	$extensao1 = strtolower(substr($_FILES['imagem1']['name'], -4));
+$codigoBateria = str_replace("/", "", $codigoBateria);
+$codigoBateria = str_replace("-", "", $codigoBateria);
 
-	$extensao2 = strtolower(substr($_FILES['imagem2']['name'], -4));
+$dataVenda = date("Y-m-d",strtotime(str_replace('/','-',$dataVenda)));
 
-	$extensao3 = strtolower(substr($_FILES['imagem3']['name'], -4));
+$extensao1 = strtolower(substr($_FILES['imagem1']['name'], -4));
 
-	if(isset($_FILES['imagem1']) && isset($_FILES['imagem2']) && isset($_FILES['imagem3'])){
-		if((strcmp($extensao1, '.jpg') == 0 || strcmp($extensao1, '.png') == 0 || strcmp($extensao1, '.gif') == 0 || strcmp($extensao1, '.pdf') == 0) && 
-			(strcmp($extensao2, '.jpg') == 0 || strcmp($extensao2, '.png') == 0 || strcmp($extensao2, '.gif') == 0 || strcmp($extensao2, '.pdf') == 0) &&
-			(strcmp($extensao3, '.jpg') == 0 || strcmp($extensao3, '.png') == 0 || strcmp($extensao3, '.gif') == 0 || strcmp($extensao3, '.pdf') == 0)){
+$extensao2 = strtolower(substr($_FILES['imagem2']['name'], -4));
 
-			$novo_nome1 = $numeroNF . "1" . md5(time()) . $extensao1;
-		$novo_nome2 = $numeroNF . "2" . md5(time()) . $extensao2;
-		$novo_nome3 = $numeroNF . "3" . md5(time()) . $extensao3;
+$extensao3 = strtolower(substr($_FILES['imagem3']['name'], -4));
 
-		move_uploaded_file($_FILES['imagem1']['tmp_name'], $diretorio.$novo_nome1);
-		move_uploaded_file($_FILES['imagem2']['tmp_name'], $diretorio.$novo_nome2);
-		move_uploaded_file($_FILES['imagem3']['tmp_name'], $diretorio.$novo_nome3);
+if(isset($_FILES['imagem1']) && isset($_FILES['imagem2']) && isset($_FILES['imagem3'])){
+	if((strcmp($extensao1, '.jpg') == 0 || strcmp($extensao1, '.png') == 0 || strcmp($extensao1, '.gif') == 0 || strcmp($extensao1, '.pdf') == 0) && 
+		(strcmp($extensao2, '.jpg') == 0 || strcmp($extensao2, '.png') == 0 || strcmp($extensao2, '.gif') == 0 || strcmp($extensao2, '.pdf') == 0) &&
+		(strcmp($extensao3, '.jpg') == 0 || strcmp($extensao3, '.png') == 0 || strcmp($extensao3, '.gif') == 0 || strcmp($extensao3, '.pdf') == 0)){
 
-		$vendaModel->inserir($idRevendedor, $cpf, $modeloBateria, $dataVenda, $placa, $numeroNF, $codigoBateria, $novo_nome1, $novo_nome2, $novo_nome3, $tipoCliente);
-	}else{
-		echo "<script type='text/javascript'> alert('Alguma das extensões não conferem'); </script>";
-		echo "<script>location.href = '../index.php';</script>";
-	}
+		$novo_nome1 = $numeroNF . "1" . md5(time()) . $extensao1;
+	$novo_nome2 = $numeroNF . "2" . md5(time()) . $extensao2;
+	$novo_nome3 = $numeroNF . "3" . md5(time()) . $extensao3;
+
+	move_uploaded_file($_FILES['imagem1']['tmp_name'], $diretorio.$novo_nome1);
+	move_uploaded_file($_FILES['imagem2']['tmp_name'], $diretorio.$novo_nome2);
+	move_uploaded_file($_FILES['imagem3']['tmp_name'], $diretorio.$novo_nome3);
+
+	$vendaModel->inserir($idRevendedor, $registro, $modeloBateria, $dataVenda, $placa, $numeroNF, $codigoBateria, $novo_nome1, $novo_nome2, $novo_nome3, $tipoCliente);
+}else{
+	echo "<script type='text/javascript'> alert('Alguma das extensões não conferem'); </script>";
+	echo "<script>location.href = '../index.php';</script>";
+}
 }
 
 echo "<script type='text/javascript'> alert('Venda cadastrada com sucesso'); </script>";
-echo "<script>location.href = '/index.php.php';</script>";
-
-
+echo "<script>location.href = '../index.php';</script>";
 
 ?>

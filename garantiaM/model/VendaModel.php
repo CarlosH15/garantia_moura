@@ -10,18 +10,18 @@ class VendaModel{
 		$this->bd = BancoDados::obterConexao();
 	}
 
-	public function inserir($idRevendedor, $idCliente, $modeloBateria, $dataVenda, $placaCarro, $numeroNotaFiscal, $codigoBateria, $imagem1, $imagem2, $imagem3, $tipoCliente){
+	public function inserir($idRevendedor, $registro, $modeloBateria, $dataVenda, $placaCarro, $numeroNotaFiscal, $codigoBateria, $imagem1, $imagem2, $imagem3, $tipoCliente){
 		
 		$findIdBateria = $this->bd->prepare("select idBateria from bateria where modeloBateria = :modeloBateria");
 		$findIdBateria->bindParam(":modeloBateria", $modeloBateria);
 		$findIdBateria->execute();
 		$idBateriaEncontrado = $findIdBateria->fetch();
 
-		if($tipoCliente == "final"){
-			$findIdCliente = $this->bd->prepare("select idClienteFinal as idCliente from final where cpf = :cpf"); // mudar codigo
+		if($tipoCliente == "pf"){
+			$findIdCliente = $this->bd->prepare("select idClienteFinal as idCliente from final where cpfClienteFinal = :cpf"); // mudar codigo
 			$findIdCliente->bindParam(":cpf", $registro);
-		}else if($tipoCliente == "frotista"){
-			$findIdCliente = $this->bd->prepare("select idClienteFrotista as idCliente from frotista where cnpj = :cnpj"); // mudar codigo
+		}else if($tipoCliente == "pj"){
+			$findIdCliente = $this->bd->prepare("select idClienteFrotista as idCliente from frotista where cnpjClienteFrotista = :cnpj"); // mudar codigo
 			$findIdCliente->bindParam(":cnpj", $registro);
 		}
 
@@ -58,7 +58,7 @@ class VendaModel{
 	}
 
 	public function consultar($codigoBateria){
-		$consulta = $this->bd->prepare("SELECT cliente.nomeCliente AS nomeCliente, revendedor.nomeRevendedor AS nomeRevendedor, bateria.modeloBateria AS descricaoBateria, venda.idBateria AS codigoBateria, venda.dataVenda as dataVenda, venda.imagem1 as caminho1, venda.imagem2 as caminho2, venda.imagem3 as caminho3 from venda inner join cliente on cliente.idCliente = venda.idCliente inner join revendedor on revendedor.idRevendedor = venda.idRevendedor inner join bateria on bateria.idBateria = venda.idBateria where venda.codigoBateria = :codigoBateria");
+		$consulta = $this->bd->prepare("SELECT cliente.nomeCliente AS nomeCliente, revendedor.nomeRevendedor AS nomeRevendedor, bateria.modeloBateria AS descricaoBateria, venda.codigoBateria AS codigoBateria, date_format(venda.dataVenda, '%d/%m/%Y') as dataVenda, venda.imagem1 as caminho1, venda.imagem2 as caminho2, venda.imagem3 as caminho3 from venda inner join cliente on cliente.idCliente = venda.idCliente inner join revendedor on revendedor.idRevendedor = venda.idRevendedor inner join bateria on bateria.idBateria = venda.idBateria where venda.codigoBateria = :codigoBateria");
 
 		$consulta->bindParam(":codigoBateria", $codigoBateria);
 

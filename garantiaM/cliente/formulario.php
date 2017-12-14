@@ -42,7 +42,7 @@ $acao = "create";
 	
 	<div class="row">
 		<div class="col-sm-8">		
-			<b><font size="4px"> Nome do frotista:   </font></b><input class="form-control" class="fonte" type="text" placeholder="Nome" name="nomeCliente" autocomplete="off" required>
+			<b><font size="4px"> Nome do frotista:   </font></b><input class="form-control" class="fonte" type="text" placeholder="Nome" name="nomeFrotista" autocomplete="off" required>
 		</div>
 	</div>
 

@@ -39,11 +39,29 @@
 	<nav  class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #F1CA34;" id="mainNav">
 		<div class="container">
 
-			<a href="/garantiaM/index.php"><img src="/garantiaM/img/icone.jpg" width="50" height="50"/></a>
+			<?php if(!isset($_SESSION["idRevendedor"])): ?>
 
-			<a class="navbar-brand js-scroll-trigger" href="/garantiaM/index.php"><strong><font color="#041040">&nbsp Programa de Garantia Estendida</font></strong></a>
+				<a href="/garantiaM/index.php"><img src="/garantiaM/img/icone.jpg" width="50" height="50"/></a>
+
+				<a class="navbar-brand js-scroll-trigger" href="/garantiaM/index.php"><strong><font color="#041040">&nbsp Programa de Garantia Estendida</font></strong></a>
+
+			<?php endif; ?>
 
 			<?php if(isset($_SESSION["idRevendedor"])): ?>
+
+				<?php if($_SESSION["nomeRevendedor"] == "COMINAS"){ ?>
+
+				<a href="/garantiaM/index.php"><img src="/garantiaM/img/icone.jpg" width="50" height="50"/></a>
+
+				<a class="navbar-brand js-scroll-trigger" href="/garantiaM/index.php"><strong><font color="#041040">&nbsp COMINAS</font></strong></a>
+
+				<?php }else{ ?>
+
+				<a href="/garantiaM/index.php"><img src="/garantiaM/img/rpm.png" width="102" height="50"/></a>
+
+				<a class="navbar-brand js-scroll-trigger" href="/garantiaM/index.php"><strong><font color="#041040">&nbsp Garantia</font></strong></a>
+
+				<?php } ?>
 				
 				<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 					Menu
@@ -53,15 +71,19 @@
 					<ul class="navbar-nav ml-auto">
 						<?php if($_SESSION["nomeRevendedor"] != "COMINAS"){ ?>
 						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="/garantiaM/venda/index.php"><font color="#041040">Venda</font></a>
+							<a class="nav-link js-scroll-trigger" href="/garantiaM/vendapf/index.php"><font color="#041040">Cliente Final</font></a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link js-scroll-trigger" href="/garantiaM/cliente/index.php"><font color="#041040">Cliente</font></a>
+							<a class="nav-link js-scroll-trigger" href="/garantiaM/vendapj/index.php"><font color="#041040">Frotista</font></a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link js-scroll-trigger" href="/garantiaM/cliente/index.php"><font color="#041040">Cadastro de cliente</font></a>
 						</li>
 						
 						<?php }else{ ?>
-							<li class="nav-item">
+						<li class="nav-item">
 							<a class="nav-link js-scroll-trigger" href="/garantiaM/assistencia/index.php"><font color="#041040">Início</font></a>
 						</li>
 						<?php } ?>

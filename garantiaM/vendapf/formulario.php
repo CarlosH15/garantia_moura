@@ -83,7 +83,7 @@ $tipoCliente = "pf";
 		</div>
 
 		<div class="col-sm-4">
-			<input class="form-control" widht=50px type="date" name="dataVenda" required><br>
+			<input class="input-group date form-control" widht=50px type="date" name="dataVenda" required><br>
 		</div>
 	</div>
 

@@ -6,21 +6,23 @@ $clienteModel = new ClienteModel();
 
 $acao = $_GET["acao"];
 
-
 if($acao == "create"){
-	$nomeCliente = $_POST["nomeCliente"];
 
 	if(isset($_POST["CPF"])){
+		$nomeCliente = $_POST["nomeCliente"];
 		$cpf = $_POST["CPF"];
 		$cpf = str_replace(".", "", $cpf);
 		$cpf = str_replace("-", "", $cpf);
-		$resultado = $clienteModel->consultaCliente($cpf, "Frotista");
-	}else if(isset($_POST["CNPJ"])){
+		$resultado = $clienteModel->consultaCliente($cpf, "Final");
+	}
+
+	if(isset($_POST["CNPJ"])){
+		$nomeCliente = $_POST["nomeFrotista"];
 		$cnpj = $_POST["CNPJ"];
 		$cnpj = str_replace("-", "", $cnpj);
 		$cnpj = str_replace("/", "", $cnpj);
 		$cnpj = str_replace(".", "", $cnpj);
-		$resultado = $clienteModel->consultaCliente($cnpj, "Final");
+		$resultado = $clienteModel->consultaCliente($cnpj, "Frotista");
 	}
 
 	if($resultado == NULL){

@@ -16,9 +16,16 @@ if($acao == "cadastro"){
 
 	$nome = strtoupper($nome);
 
-	$revendedorModel->inserir($nome, $cnpj);
-	echo "<script type='text/javascript'> alert('Revendedor inserido no banco!'); </script>";
-	echo "<script>location.href='/garantiaM/assistencia/revendedores/login.php'</script>";
+	$resultado = $revendedorModel->autenticacao($cnpj);
+
+	if($resultado == true){
+		
+	}else{
+		$revendedorModel->inserir($nome, $cnpj);
+		echo "<script type='text/javascript'> alert('Revendedor inserido no banco!'); </script>";
+		echo "<script>location.href='/garantiaM/assistencia/revendedores/login.php'</script>";
+	}
+
 }else if($acao == "login"){
 
 	$cnpj = $_POST["cnpjRevendedor"];
